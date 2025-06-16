@@ -1,0 +1,144 @@
+[
+  // Bar 1: Top Bar (Based on your provided MyBar.jsonc)
+  {
+    "layer": "top",
+    "output": ["*"],
+    "position": "top",
+    "reload_style_on_change": true,
+    // "height": 30, // Optional: set a height for the top bar
+    "spacing": 5, // Optional: spacing between modules/groups
+
+    "include": ["$XDG_CONFIG_HOME/waybar/includes/includes.json"], // From your original config
+
+    // Define the custom clipboard module here so it's available to all bars in this file
+    "custom/clipboard": {
+      "format": "󰅇", // Clipboard icon (ensure you have Nerd Fonts or similar)
+      "tooltip": true,
+      "tooltip-format": "Clipboard History (Click or Win+V)",
+      "on-click": "cliphist list | rofi -dmenu -p '📋 Clipboard:' -theme-str 'window {width: 50%;}' | cliphist decode | wl-copy",
+      "signal": 8 // You can use 'pkill -SIGRTMIN+8 waybar' to refresh if needed
+    },
+
+    // --- Modules and Groups from your original MyBar.jsonc ---
+    "group/pill-left": {
+      "orientation": "inherit",
+      "modules": ["custom/keybindhint", "custom/updates", "custom/clipboard"] // Added clipboard module
+    },
+    "group/pill-right": {
+      "orientation": "inherit",
+      "modules": ["battery", "custom/hyde-menu"]
+    },
+    "group/pill-up": {
+      "orientation": "inherit",
+      "modules": ["wlr/taskbar"]
+    },
+    "group/pill-down": {
+      "orientation": "inherit",
+      "modules": ["hyprland/workspaces"]
+    },
+    "group/pill-in": {
+      "orientation": "inherit",
+      "modules": ["idle_inhibitor", "clock"]
+    },
+    "group/pill-out": {
+      "orientation": "inherit",
+      "modules": ["custom/weather", "hyprland/language"]
+    },
+    "group/leaf": {
+      "orientation": "inherit",
+      "modules": ["custom/workflows", "memory"]
+    },
+    "group/leaf-inverse": {
+      "orientation": "inherit",
+      "modules": ["custom/gpuinfo", "custom/cpuinfo"]
+    },
+    "group/pill-down#right": {
+      "orientation": "inherit",
+      "modules": ["pulseaudio", "pulseaudio#microphone", "tray"]
+    },
+    "group/pill-up#right": {
+      "orientation": "inherit",
+      "modules": ["privacy", "custom/hyprsunset", "backlight#intel_backlight"]
+    },
+
+    // --- Module placement for the top bar ---
+    "modules-left": ["group/pill-left", "group/pill-down", "group/pill-up"],
+    "modules-center": ["group/leaf", "group/pill-in", "group/leaf-inverse"],
+    "modules-right": [
+      "group/pill-up#right",
+      "group/pill-down#right",
+      "group/pill-right"
+    ]
+  },
+
+  // Bar 2: Left Bar
+  {
+    "name": "left-bar", // Optional: for CSS styling (#left-bar)
+    "layer": "top",
+    "output": ["*"], // Or specify a particular monitor
+    "position": "left",
+    "width": 42, // Adjust width for the vertical bar
+    "spacing": 4, // Spacing between modules on the vertical bar
+    "reload_style_on_change": true,
+
+    "include": ["$XDG_CONFIG_HOME/waybar/includes/includes.json"], // Consistent includes
+
+    // --- Define modules specifically styled or arranged for the left vertical bar ---
+    // You can reuse modules defined in the first bar (like "custom/clipboard")
+    // or built-in modules. Define new ones if they need different formatting.
+
+    "clock#vertical": { // Unique name for a vertically oriented clock
+      "format": "{:%H}\n{:%M}", // Hours above Minutes
+      "tooltip-format": "<big>{:%A, %d %B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+      "on-click": "kitty --class 'floating_calendar' cal -m", // Example: show calendar on click
+      "on-click-right": "killall kitty --class 'floating_calendar'"
+    },
+    "cpu#vertical": {
+      "format": "\n{usage}%", // CPU icon above percentage
+      "orientation": "vertical",
+      "interval": 1
+    },
+    "memory#vertical": {
+      "format": "󰍛\n{percentage}%", // Memory icon above percentage
+      "orientation": "vertical",
+      "interval": 1
+    },
+    "hyprland/workspaces#vertical": {
+        "format": "{icon}",
+        "format-icons": {
+            "1": "一", "2": "二", "3": "三", "4": "四", "5": "五",
+            "default": "",
+            "active": "",
+            "urgent": ""
+        },
+        "persistent_workspaces": { "*": [1, 2, 3, 4, 5] }, // Show 5 workspaces always
+        "all-outputs": true,
+        "on-click": "activate",
+        "orientation": "vertical" // Key for vertical stacking of workspace buttons
+    },
+    "custom/power_vertical": { // Assuming custom/power is defined in includes.json or is a simple custom module
+        "format": "⏻",
+        "tooltip": true,
+        "tooltip-format": "Power Menu",
+        "on-click": "wlogout" // Or your preferred power menu script
+    },
+
+    // --- Module placement for the left bar (top to bottom) ---
+    // "modules-left" is the top-most section of the vertical bar
+    // "modules-center" is the middle
+    // "modules-right" is the bottom-most
+    "modules-left": [
+      "custom/clipboard", // Using the clipboard module defined in the first bar
+      "hyprland/workspaces#vertical"
+    ],
+    "modules-center": [
+      "clock#vertical",
+      "cpu#vertical",
+      "memory#vertical"
+    ],
+    "modules-right": [
+      "tray", // Tray module
+      "custom/power_vertical" // Example power button
+    ]
+  }
+]

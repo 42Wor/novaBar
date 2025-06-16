@@ -1,0 +1,115 @@
+{
+  /*
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │     Global Options for the Waybar configuration                             │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
+  "layer": "top",
+  "output": ["*"],
+  "position": "top",
+  "reload_style_on_change": true,
+
+  /*
+  ┌────────────────────────────────────────────────────────────────────────────┐
+  │                                                                            │
+  │ This is one of the vital part of the configuration, it allows you to       │
+  │ include other                                                              │
+  │ files                                                                      │
+  │ The `"$XDG_CONFIG_HOME/waybar/includes/includes.json"` is auto generated   │
+  │ by the waybar.py                                                           │
+  │ script.                                                                    │
+  │ 1. Includes all the modules in `./waybar/modules`                          │
+  │ 2. Resolves all the size for the icons that the style.css in waybar        │
+  │ CANNOT                                                                     │
+  │ handle                                                                     │
+  │ 3. Of course this is optional, you can remove it if you don't want to use  │
+  │ it and                                                                     │
+  │ include your own set of modules.                                           │
+  │                                                                            │
+  └────────────────────────────────────────────────────────────────────────────┘
+ */
+
+  "include": ["$XDG_CONFIG_HOME/waybar/includes/includes.json"],
+
+  /*
+  ┌────────────────────────────────────────────────────────────────────────────┐
+  │ Declare the modules inside your desired group shapes                       │
+  │  As of now we have:                                                        │
+  │                                                                            │
+  │ - pill-left - the curve is facing left                                     │
+  │ - pill-right - the curve is facing right                                   │
+  │ - pill-up - the curve is facing up                                         │
+  │ - pill-down - the curve is facing down                                     │
+  │ - pill-in - the curve is facing inwards no matter the position             │
+  │ - pill-out - the curve is facing outwards no matter the position           │
+  │ - leaf - a leaf shape                                                      │
+  │ - leaf-inverse - a leaf shape but inverted                                 │
+  │                                                                            │
+  └────────────────────────────────────────────────────────────────────────────┘
+ */
+
+  "group/pill-left": {
+    "orientation": "inherit",
+    "modules": ["custom/keybindhint", "custom/updates"]
+  },
+  "group/pill-right": {
+    "orientation": "inherit",
+    "modules": ["battery", "custom/hyde-menu"]
+  },
+  "group/pill-up": {
+    "orientation": "inherit",
+    "modules": ["wlr/taskbar"]
+  },
+  "group/pill-down": {
+    "orientation": "inherit",
+    "modules": ["hyprland/workspaces"]
+  },
+  "group/pill-in": {
+    "orientation": "inherit",
+    "modules": ["idle_inhibitor", "clock"]
+  },
+  "group/pill-out": {
+    "orientation": "inherit",
+    "modules": ["custom/weather", "hyprland/language"]
+  },
+  "group/leaf": {
+    "orientation": "inherit",
+    "modules": ["custom/workflows", "memory"]
+  },
+  "group/leaf-inverse": {
+    "orientation": "inherit",
+    "modules": ["custom/gpuinfo", "custom/cpuinfo"]
+  },
+
+  /*
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ Re-using a group is simple, You just need to add a #tag to the group     │
+  │ name.                                                                   │
+  └─────────────────────────────────────────────────────────────────────────┘
+ */
+
+  "group/pill-down#right": {
+    "orientation": "inherit",
+    "modules": ["pulseaudio", "pulseaudio#microphone", "tray"]
+  },
+  "group/pill-up#right": {
+    "orientation": "inherit",
+    "modules": ["privacy", "custom/hyprsunset", "backlight#intel_backlight"]
+  },
+
+  /*
+  ┌────────────────────────────────────────────────────────────────────────────┐
+  │                                                                            │
+  │ Declare the groups in the module position provided by waybar               │
+  │                                                                            │
+  └────────────────────────────────────────────────────────────────────────────┘
+ */
+  "modules-left": ["group/pill-left", "group/pill-down", "group/pill-up"],
+  "modules-center": ["group/leaf", "group/pill-in", "group/leaf-inverse"],
+  "modules-right": [
+    "group/pill-up#right",
+    "group/pill-down#right",
+    "group/pill-right"
+  ]
+}

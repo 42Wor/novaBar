@@ -1,0 +1,100 @@
+/* HyDE Waybar Style: novaBar/style.css */
+
+/* This is the main bar styling */
+#waybar {
+    background-color: rgba(30, 30, 46, 0.85); /* Slightly transparent dark background - Catppuccin Macchiato Base */
+    color: #cdd6f4; /* Catppuccin Macchiato Text */
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+    font-size: 14px;
+    border-radius: 12px; /* Rounded corners for the bar itself */
+    border: 1px solid rgba(108, 112, 134, 0.4); /* Subtle border - Catppuccin Macchiato Overlay0 */
+}
+
+/* Styling for all modules */
+#waybar > box > .module {
+    padding: 0 10px; /* Horizontal padding for modules */
+    margin: 5px 4px;  /* Vertical margin and small horizontal spacing between modules */
+    min-width: 20px;
+    border-radius: 9px; /* Rounded corners for individual modules */
+    background-color: rgba(49, 50, 68, 0.75); /* Catppuccin Macchiato Surface0 */
+    color: #cdd6f4; /* Catppuccin Macchiato Text */
+    transition: background-color 0.3s ease;
+}
+
+#waybar > box > .module:hover {
+    background-color: rgba(69, 71, 90, 0.85); /* Catppuccin Macchiato Surface1 on hover */
+}
+
+/* --- Left Modules --- */
+#custom-launcher {
+    color: #b4befe; /* Catppuccin Macchiato Lavender */
+    font-size: 18px;
+    padding: 0 12px;
+}
+#cpu { color: #f9e2af; /* Catppuccin Macchiato Yellow */ }
+#memory { color: #cba6f7; /* Catppuccin Macchiato Mauve */ }
+#disk { color: #94e2d5; /* Catppuccin Macchiato Teal */ }
+#custom-active_apps { color: #a6adc8; /* Catppuccin Macchiato Subtext0 */ }
+
+
+/* --- Center Modules --- */
+#workspaces button {
+    padding: 0 6px;
+    background-color: transparent;
+    color: #a6adc8; /* Catppuccin Macchiato Subtext0 */
+    border-radius: 7px;
+    margin: 0 3px;
+    transition: all 0.3s ease-in-out;
+    font-size: 16px; /* Make workspace icons a bit larger */
+}
+#workspaces button:hover {
+    background-color: rgba(137, 180, 250, 0.3); /* Catppuccin Macchiato Blue, slightly transparent */
+    color: #89b4fa; /* Catppuccin Macchiato Blue */
+    box-shadow: none;
+}
+#workspaces button.focused {
+    background-color: #89b4fa; /* Catppuccin Macchiato Blue */
+    color: #1e1e2e; /* Catppuccin Macchiato Base */
+}
+#workspaces button.urgent {
+    background-color: #f38ba8; /* Catppuccin Macchiato Red */
+    color: #1e1e2e; /* Catppuccin Macchiato Base */
+}
+#window {
+    font-weight: bold;
+    color: #cad3f5; /* Catppuccin Macchiato Lavender */
+    padding-right: 15px;
+}
+
+/* --- Right Modules --- */
+#network { color: #89b4fa; /* Catppuccin Macchiato Blue */ }
+#network.disconnected { background-color: #f38ba8; color: #1e1e2e; }
+#pulseaudio { color: #f5c2e7; /* Catppuccin Macchiato Pink */ }
+#pulseaudio.muted { color: #6c7086; /* Catppuccin Macchiato Overlay0 */ }
+#pulseaudio.microphone { color: #fab387; /* Catppuccin Macchiato Peach */ }
+#pulseaudio.microphone.muted { color: #6c7086; }
+#backlight { color: #94e2d5; /* Catppuccin Macchiato Teal */ }
+#custom-updates { color: #f2cdcd; /* Catppuccin Macchiato Flamingo */ }
+#custom-updates.pending { color: #f38ba8; font-weight: bold; } /* Class set by your script */
+#tray { padding: 0 8px; }
+#tray > .passive { -gtk-icon-effect: dim; }
+#tray > .needs-attention { -gtk-icon-effect: highlight; background-color: #fab387; }
+#clock { color: #a6e3a1; font-weight: bold; /* Catppuccin Macchiato Green */ }
+#custom-power_top_right {
+    color: #f38ba8; /* Catppuccin Macchiato Red */
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+
+/* Tooltips */
+tooltip {
+    background-color: #181825; /* Catppuccin Macchiato Crust */
+    color: #cdd6f4; /* Catppuccin Macchiato Text */
+    border-radius: 8px;
+    border: 1px solid #313244; /* Catppuccin Macchiato Surface0 */
+    padding: 10px;
+}
+tooltip label {
+    color: #cdd6f4; /* Catppuccin Macchiato Text */
+}
