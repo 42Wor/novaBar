@@ -1,0 +1,147 @@
+{
+    // Waybar Layout: novaBar/config (Single Top Bar - Advanced)
+    "layer": "top",
+    "position": "top",
+    "height": 34,       // Slightly taller for better spacing
+    "spacing": 6,       // Spacing between modules
+    "margin-top": 5,
+    "margin-bottom": 0,
+    "margin-left": 8,
+    "margin-right": 8,
+
+    // --- TOP-LEFT SECTION ---
+    "modules-left": [
+        "custom/launcher",
+        "cpu",
+        "memory",
+        "disk",
+        "custom/active_apps" // Placeholder for open app icons (complex for single bar)
+    ],
+
+    // --- TOP-MIDDLE SECTION ---
+    "modules-center": [
+        "hyprland/workspaces",
+        "hyprland/window"
+    ],
+
+    // --- TOP-RIGHT SECTION ---
+    "modules-right": [
+        "network",
+        "pulseaudio",
+        "pulseaudio#microphone",
+        "backlight",
+        "custom/updates",
+        "tray",
+        "clock",
+        "custom/power_top_right" // Power button moved to top-right for single bar simplicity
+    ],
+
+    // --- MODULE DEFINITIONS ---
+
+    // -- Left Modules --
+    "custom/launcher": {
+        "format": "", // Arch icon or 🚀
+        "tooltip": "Application Launcher",
+        "on-click": "rofi -show drun",
+        "on-click-right": "rofi -show run"
+    },
+    "cpu": {
+        "format": " {usage}%",
+        "tooltip": true,
+        "interval": 2
+    },
+    "memory": {
+        "format": " {used:0.1f}G",
+        "interval": 5
+    },
+    "disk": {
+        "interval": 30,
+        "format": " {percentage_used}%",
+        "path": "/",
+        "tooltip": true,
+        "tooltip-format": "Disk {path}: {used} / {total} ({percentage_used}%)"
+    },
+    "custom/active_apps": {
+        // This is complex for a single bar.
+        // A script would need to get open app icons and format them.
+        // For simplicity here, it's a placeholder.
+        "format": " Apps", // Placeholder
+        "tooltip": "Currently open applications (conceptual)",
+        "exec": "echo '{\"text\": \"Apps\"}'", // Dummy exec
+        "return-type": "json",
+        "interval": "once"
+    },
+
+    // -- Center Modules --
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "1": "一", "2": "二", "3": "三", "4": "四", "5": "五",
+            "default": "",
+            "focused": "",
+            "urgent": ""
+        },
+        "persistent-workspaces": { "*": 5 },
+        "on-click": "activate"
+    },
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 40,
+        "separate-outputs": true
+    },
+
+    // -- Right Modules --
+    "network": {
+        "format-wifi": " {essid} ({signalStrength}%)",
+        "format-ethernet": " {ipaddr}",
+        "format-disconnected": "⚠ Offline",
+        "tooltip-format-wifi": "Interface: {ifname}\nSSID: {essid}\nSignal: {signalStrength}%\nIP: {ipaddr}\nGateway: {gwaddr}",
+        "tooltip-format-ethernet": "Interface: {ifname}\nIP: {ipaddr}\nGateway: {gwaddr}",
+        "tooltip-format-disconnected": "No Connection",
+        "on-click": "nm-connection-editor"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": " Muted",
+        "on-click": "pavucontrol",
+        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +2%",
+        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -2%",
+        "format-icons": { "default": ["", "", ""] }
+    },
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": " Muted",
+        "on-click": "pavucontrol --tab=3",
+        "on-scroll-up": "pactl set-source-volume @DEFAULT_SOURCE@ +5%",
+        "on-scroll-down": "pactl set-source-volume @DEFAULT_SOURCE@ -5%"
+    },
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["", ""],
+        "on-scroll-up": "brightnessctl set 2%+",
+        "on-scroll-down": "brightnessctl set 2%-"
+    },
+    "custom/updates": {
+        "format": " {}",
+        "exec": "~/.config/waybar/scripts/check_updates.sh", // You need this script
+        "return-type": "json",
+        "interval": 1800, // Check every 30 mins
+        "on-click": "kitty --hold -e sudo pacman -Syu", // Adjust for your package manager
+        "signal": 8 // Example: run `pkill -RTMIN+8 waybar` to refresh
+    },
+    "tray": {
+        "icon-size": 18,
+        "spacing": 8
+    },
+    "clock": {
+        "format": "{:%H:%M}",
+        "format-alt": "{:%Y-%m-%d}",
+        "tooltip-format": "<big>{:%A, %B %d, %Y}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "custom/power_top_right": { // Renamed to avoid conflict if a left-bar is added later
+        "format": "",
+        "tooltip": "Power Menu",
+        "on-click": "rofi -show power-menu -modi power-menu:~/.config/rofi/scripts/rofi-power-menu --theme ~/.config/rofi/themes/powermenu.rasi"
+    }
+}
