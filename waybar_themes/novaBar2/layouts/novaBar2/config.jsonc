@@ -77,7 +77,7 @@
     "layer": "top",
     "output": ["*"], // Or specify a particular monitor
     "position": "left",
-    "width": 42, // Adjust width for the vertical bar
+    "width": 54, // Adjust width for the vertical bar
     "spacing": 4, // Spacing between modules on the vertical bar
     "reload_style_on_change": true,
 
@@ -138,7 +138,7 @@
     ],
     "modules-right": [
       "tray", // Tray module
-      "custom/power_vertical" // Example power button
+      "custom/power_vertical"
     ]
   }
 ]
